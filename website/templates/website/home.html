@@ -1,30 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steel & Code</title>
-</head>
+{% extends "website/base.html" %}
 
-<body>
+{% block title %}
+Steel & Code
+{% endblock %}
 
-    <h1>STEEL & CODE</h1>
+{% block content %}
 
-    <h2>Learn the process. Build the skill.</h2>
+<section class="hero">
+    <p class="eyebrow">PRACTICAL COMPUTING EDUCATION</p>
 
-    <p>
-        Practical programming education focused on Python,
-        automation, and computational thinking.
+    <h1>Learn the process.<br>Build the skill.</h1>
+
+    <p class="hero-text">
+        Learn Python, automation, computational thinking,
+        and applied problem solving through practical projects.
     </p>
 
-    <hr>
+    <div class="hero-buttons">
+        <a href="{% url 'courses' %}" class="btn btn-primary">Start Learning</a>
+        <a href="{% url 'courses' %}" class="btn btn-secondary">Explore Courses</a>
+    </div>
+</section>
 
+<section class="intro">
     <h2>Start Here</h2>
 
     <p>
-        Learn programming by solving problems, building projects,
-        and understanding why the code works.
+        Programming is more than memorizing syntax.
+        Learn how to break problems down, build solutions,
+        and understand why your code works.
     </p>
+</section>
 
-</body>
-</html>
+{% endblock %}

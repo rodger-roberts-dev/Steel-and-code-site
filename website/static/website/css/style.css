@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #101010;
+    color: #f3f3f3;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 24px 6%;
+    border-bottom: 1px solid #333;
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+}
+
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.hero {
+    min-height: 70vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 80px 8%;
+    max-width: 1100px;
+}
+
+.eyebrow {
+    letter-spacing: 3px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.hero h1 {
+    font-size: 72px;
+    line-height: 1.05;
+
+    margin: 15px 0;
+}
+
+.hero-text {
+    max-width: 650px;
+
+    font-size: 20px;
+    line-height: 1.6;
+
+    color: #ccc;
+}
+
+.hero-buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    display: inline-block;
+
+    padding: 14px 24px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    border: 1px solid #ddd;
+}
+
+.btn-primary {
+    background: #f2f2f2;
+    color: #111;
+}
+
+.btn-secondary {
+    color: #f2f2f2;
+}
+
+.intro {
+    padding: 80px 8%;
+    border-top: 1px solid #333;
+
+    max-width: 1100px;
+}
+
+.intro h2 {
+    font-size: 38px;
+}
+
+.intro p {
+    max-width: 700px;
+
+    font-size: 18px;
+    line-height: 1.6;
+
+    color: #ccc;
+
+    .page-section {
+        padding: 100px 8%;
+        max-width: 1100px;
+    }
+
+    .page-section h1 {
+        font-size: 56px;
+        margin-bottom: 20px;
+    }
+
+    .page-section p {
+        font-size: 20px;
+        line-height: 1.6;
+        color: #ccc;
+        max-width: 700px;
+    }
+}
