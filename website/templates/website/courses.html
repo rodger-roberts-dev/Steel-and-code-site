@@ -1,14 +1,44 @@
 {% extends "website/base.html" %}
 
-{% block title %}
-Courses | Steel & Code
-{% endblock %}
+{% block title %}Courses | Steel & Code{% endblock %}
 
 {% block content %}
-
 <section class="page-section">
     <h1>Courses</h1>
-    <p>Practical courses in programming, automation, and computational thinking.</p>
-</section>
+    <p>Practical programming. Clear thinking. Skills you can put to work.</p>
 
+    <article class="flagship-course" aria-labelledby="python-course-title">
+        <p class="eyebrow">FLAGSHIP COURSE</p>
+        <h2 id="python-course-title">Python Programming Fundamentals</h2>
+        <p>
+            Learn the process, not just the syntax. Break problems down,
+            build solutions in Python, and automate repetitive work through
+            real-world exercises.
+        </p>
+
+        <div class="course-details">
+            <section aria-labelledby="course-foundations">
+                <h3 id="course-foundations">Build the foundations</h3>
+                <ul>
+                    <li>Use variables, collections, loops, and functions to solve problems.</li>
+                    <li>Read and write files, organize data, and work with CSV records.</li>
+                    <li>Debug step by step and check that your code does what you intend.</li>
+                </ul>
+            </section>
+            <section aria-labelledby="course-practice">
+                <h3 id="course-practice">Put Python to work</h3>
+                <ul>
+                    <li>Organize files and automate repeatable tasks.</li>
+                    <li>Clean data and turn raw records into useful summaries.</li>
+                    <li>Build small scripts, test them, and refine them as requirements change.</li>
+                </ul>
+            </section>
+        </div>
+
+        <p class="course-process">
+            Start where you are. Work through a problem, understand why the solution
+            works, then simplify it. Teach, refine, simplify.
+        </p>
+    </article>
+</section>
 {% endblock %}

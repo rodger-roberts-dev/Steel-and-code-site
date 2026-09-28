@@ -1,14 +1,82 @@
 {% extends "website/base.html" %}
 
-{% block title %}
-Courses | Steel & Code
-{% endblock %}
+{% block title %}Applied Physics & Computational Modeling | Steel & Code{% endblock %}
 
 {% block content %}
+<section class="page-section modeling-page">
+    <p class="eyebrow">APPLIED PHYSICS / COMPUTATIONAL MODELING</p>
+    <h1>Build a model.<br>Understand the system.</h1>
+    <p>Use Python to explore how the physical world works. Turn formulas into code,
+        change the inputs, and make the results visible.</p>
+    <p>Start with familiar questions and simple models. We introduce the physics
+        and programming as you need them, one step at a time.</p>
 
-<section class="page-section">
-    <h1>Courses</h1>
-    <p>Practical courses in programming, automation, and computational thinking.</p>
+    <section class="model-panel" aria-labelledby="model-process">
+        <h2 id="model-process">From a question to a working model</h2>
+        <ol class="model-steps">
+            <li><strong>Define the system.</strong> Decide what you want to understand.
+                Identify the quantities, units, and assumptions.</li>
+            <li><strong>Translate the formula.</strong> Express the relationship in Python
+                and check it against a simple calculation.</li>
+            <li><strong>Explore and refine.</strong> Change one input, plot the results,
+                and ask what the model explains and what it leaves out.</li>
+        </ol>
+        <p>Learn by building, checking, and improving models. The goal is to understand
+            why a relationship works, beyond memorizing a formula.</p>
+    </section>
+
+    <section class="model-section" aria-labelledby="model-examples">
+        <h2 id="model-examples">Physical ideas you can explore</h2>
+        <div class="model-grid">
+            <article class="model-example">
+                <h3>Electricity & circuits</h3>
+                <p>Use Ohm’s Law to connect voltage, current, and resistance.
+                    Compare series and parallel resistor circuits and see how
+                    changing a resistance affects the current.</p>
+            </article>
+            <article class="model-example">
+                <h3>Motion & energy</h3>
+                <p>Track position and speed over time. Model constant acceleration,
+                    explore kinetic and potential energy, and compare predictions
+                    with simple observations.</p>
+            </article>
+            <article class="model-example">
+                <h3>Waves & oscillations</h3>
+                <p>Plot a wave, adjust its amplitude and frequency, and see what changes.
+                    Use the same ideas to explore repeating motion.</p>
+            </article>
+            <article class="model-example">
+                <h3>Other physical systems</h3>
+                <p>Extend the process to cooling, springs, or other systems that interest
+                    you. Start with a useful approximation, then add detail as your
+                    understanding grows.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="model-panel" aria-labelledby="model-code">
+        <p class="eyebrow">A SMALL MODEL: OHM’S LAW</p>
+        <h2 id="model-code">A formula becomes a tool</h2>
+        <p>For an ideal resistor, current equals voltage divided by resistance:
+            <code>I = V / R</code>. In Python, give each quantity a clear name.</p>
+        <pre class="model-code"><code>voltage = 12       # volts
+resistance = 100   # ohms
+current = voltage / resistance
+print(current)    # 0.12 amperes</code></pre>
+        <p>Keep resistance fixed and double the voltage. The current doubles too.
+            Try several values, then plot voltage against current to see the relationship.</p>
+    </section>
+
+    <section class="model-section" aria-labelledby="model-tools">
+        <h2 id="model-tools">Make the results visible</h2>
+        <p>Begin with a few lines of Python. As your questions grow, use NumPy to
+            calculate across many values, pandas to organize and compare data,
+            and Matplotlib to turn results into clear graphs.</p>
+        <p>Each tool serves the same purpose: make a difficult idea easier to inspect,
+            test, and understand.</p>
+        <div class="hero-buttons">
+            <a href="{% url 'courses' %}" class="btn btn-primary">Build your Python foundations</a>
+        </div>
+    </section>
 </section>
-
 {% endblock %}

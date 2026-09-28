@@ -1,14 +1,64 @@
 {% extends "website/base.html" %}
 
-{% block title %}
-Courses | Steel & Code
-{% endblock %}
+{% block title %}About | Steel & Code{% endblock %}
 
 {% block content %}
+<section class="page-section about-page">
+    <p class="eyebrow">ABOUT STEEL &amp; CODE</p>
+    <h1>Teach, refine, simplify.</h1>
+    <p>Steel &amp; Code teaches practical technical skills through applied work.
+        We break difficult topics into understandable steps, then put those
+        steps to use on problems that matter.</p>
 
-<section class="page-section">
-    <h1>Courses</h1>
-    <p>Practical courses in programming, automation, and computational thinking.</p>
+    <section class="about-philosophy" aria-labelledby="about-craft">
+        <h2 id="about-craft">Craftsmen make craftsmen.</h2>
+        <p>Strong practitioners help develop other strong practitioners by sharing
+            how they think, work, and improve. That means explaining decisions,
+            working through mistakes, and helping students build their own judgment.</p>
+        <p>The aim is lasting understanding: the confidence to approach an unfamiliar
+            problem and work toward a solution.</p>
+    </section>
+
+    <div class="about-principles">
+        <section aria-labelledby="about-process">
+            <h2 id="about-process">Learn the process</h2>
+            <p>Define the problem, break it down, build a solution, and check the result.
+                Syntax and formulas become useful tools when you understand when
+                to use them and why they work.</p>
+        </section>
+        <section aria-labelledby="about-start">
+            <h2 id="about-start">Start where you are</h2>
+            <p>Students bring different experience and ways of thinking. We meet you
+                where you are, make room for questions, and build from what you
+                already understand.</p>
+        </section>
+        <section aria-labelledby="about-practice">
+            <h2 id="about-practice">Work with real problems</h2>
+            <p>Automate a repetitive task, make sense of data, or build a computational
+                model of a physical system. Practical exercises connect each new
+                concept to something you can use, inspect, and improve.</p>
+        </section>
+        <section aria-labelledby="about-refine">
+            <h2 id="about-refine">Refine what you build</h2>
+            <p>A working answer is a starting point. Test your assumptions, explain
+                your choices, and simplify your approach. Each revision strengthens
+                both the solution and your understanding.</p>
+        </section>
+    </div>
+
+    <section class="about-background" aria-labelledby="about-founder">
+        <p class="eyebrow">THE BACKGROUND BEHIND THE APPROACH</p>
+        <h2 id="about-founder">Experience put to work</h2>
+        <p>The founder’s background spans data analytics and business intelligence,
+            Python and SQL, higher education instruction, and military analytical
+            experience. It also includes programming fundamentals and applied physics
+            through computational modeling.</p>
+        <p>Steel &amp; Code brings those experiences together in teaching that connects
+            clear explanations with practical application.</p>
+        <div class="hero-buttons">
+            <a href="{% url 'courses' %}" class="btn btn-primary">Explore courses</a>
+            <a href="{% url 'applied_physics' %}" class="btn btn-secondary">Explore computational modeling</a>
+        </div>
+    </section>
 </section>
-
 {% endblock %}

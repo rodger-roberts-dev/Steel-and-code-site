@@ -1,35 +1,63 @@
 {% extends "website/base.html" %}
 
-{% block title %}
-Steel & Code
-{% endblock %}
+{% block title %}Steel & Code | Practical Python & Computational Modeling{% endblock %}
 
 {% block content %}
+<div class="home-page">
+    <section class="hero" aria-labelledby="home-title">
+        <p class="eyebrow">PRACTICAL COMPUTING EDUCATION</p>
+        <h1 id="home-title">Learn the process.<br>Build the skill.</h1>
+        <p class="hero-text">
+            Steel &amp; Code teaches Python, automation, and computational modeling
+            through practical problem solving. Build useful tools and understand
+            why they work.
+        </p>
+        <p class="home-audience">For beginners, working professionals, and curious
+            problem solvers. Start where you are and build from what you know.</p>
+        <div class="hero-buttons">
+            <a href="{% url 'courses' %}" class="btn btn-primary">Explore Python Programming Fundamentals</a>
+        </div>
+    </section>
 
-<section class="hero">
-    <p class="eyebrow">PRACTICAL COMPUTING EDUCATION</p>
+    <section class="intro home-paths" aria-labelledby="home-start">
+        <p class="eyebrow">START HERE</p>
+        <h2 id="home-start">Put your curiosity to work.</h2>
+        <div class="home-path-grid">
+            <article class="home-path">
+                <p class="eyebrow">FLAGSHIP COURSE</p>
+                <h3>Python Programming Fundamentals</h3>
+                <p>Break problems into manageable steps. Work with files and data,
+                    automate repetitive tasks, and build confidence through
+                    real-world exercises.</p>
+                <a href="{% url 'courses' %}" class="btn btn-primary">Explore Python Programming Fundamentals</a>
+            </article>
+            <article class="home-path">
+                <p class="eyebrow">MODEL THE PHYSICAL WORLD</p>
+                <h3>Applied Physics / Computational Modeling</h3>
+                <p>Turn formulas into Python, change the inputs, and visualize what
+                    happens. Explore circuits, motion, energy, and waves one
+                    understandable model at a time.</p>
+                <a href="{% url 'applied_physics' %}" class="btn btn-secondary">Explore Applied Physics / Computational Modeling</a>
+            </article>
+        </div>
+    </section>
 
-    <h1>Learn the process.<br>Build the skill.</h1>
-
-    <p class="hero-text">
-        Learn Python, automation, computational thinking,
-        and applied problem solving through practical projects.
-    </p>
-
-    <div class="hero-buttons">
-        <a href="{% url 'courses' %}" class="btn btn-primary">Start Learning</a>
-        <a href="{% url 'courses' %}" class="btn btn-secondary">Explore Courses</a>
-    </div>
-</section>
-
-<section class="intro">
-    <h2>Start Here</h2>
-
-    <p>
-        Programming is more than memorizing syntax.
-        Learn how to break problems down, build solutions,
-        and understand why your code works.
-    </p>
-</section>
-
+    <section class="intro home-approach" aria-labelledby="home-approach-title">
+        <p class="eyebrow">HOW WE TEACH</p>
+        <h2 id="home-approach-title">Teach, refine, simplify.</h2>
+        <p>Learn the process, not just the syntax. Define the problem, build a small
+            solution, check the result, and improve it. Code and formulas become
+            tools for understanding, with each step grounded in practical work.</p>
+        <div class="home-craft">
+            <h3>Craftsmen make craftsmen.</h3>
+            <p>Strong practitioners help others develop their skills by sharing
+                their reasoning, working through mistakes, and making difficult
+                ideas easier to understand. We meet students where they are and
+                help them build independent judgment.</p>
+        </div>
+        <div class="hero-buttons">
+            <a href="{% url 'about' %}" class="btn btn-secondary">Learn About Steel &amp; Code</a>
+        </div>
+    </section>
+</div>
 {% endblock %}

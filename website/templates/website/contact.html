@@ -1,14 +1,55 @@
 {% extends "website/base.html" %}
 
-{% block title %}
-Courses | Steel & Code
-{% endblock %}
+{% block title %}Contact | Steel & Code{% endblock %}
 
 {% block content %}
+<section class="page-section contact-page">
+    <p class="eyebrow">CONTACT STEEL &amp; CODE</p>
+    <h1>Let’s talk about what you want to build.</h1>
+    <p>Questions about courses, coaching, computational modeling, or collaboration?
+        We welcome students, fellow practitioners, and organizations looking
+        to develop practical technical skills.</p>
 
-<section class="page-section">
-    <h1>Courses</h1>
-    <p>Practical courses in programming, automation, and computational thinking.</p>
+    <div class="contact-layout">
+        <section class="contact-methods" aria-labelledby="contact-methods-title">
+            <h2 id="contact-methods-title">Contact methods</h2>
+            <h3>Email</h3>
+            <p>Coming soon. A dedicated Steel &amp; Code business email will be added here.</p>
+            <h3>Send an inquiry</h3>
+            <p>The form is a preview for now. Online inquiries are not yet available.</p>
+            <p>When you get in touch, tell us what you want to learn or build,
+                your current experience, and any goals for your project or team.</p>
+        </section>
+
+        <section class="contact-panel" aria-labelledby="contact-form-title">
+            <h2 id="contact-form-title">Send a message</h2>
+            <p id="contact-preview-note" class="contact-notice">
+                Preview only: this form is a front-end layout. It is not connected
+                to email or a database, and nothing entered here will be sent or saved
+                by Steel &amp; Code.
+            </p>
+            <form aria-labelledby="contact-form-title" aria-describedby="contact-preview-note"
+                  onsubmit="event.preventDefault()">
+                <div class="contact-field">
+                    <label for="contact-name">Name</label>
+                    <input id="contact-name" type="text" autocomplete="name">
+                </div>
+                <div class="contact-field">
+                    <label for="contact-email">Email</label>
+                    <input id="contact-email" type="email" autocomplete="email">
+                </div>
+                <div class="contact-field">
+                    <label for="contact-subject">Subject</label>
+                    <input id="contact-subject" type="text">
+                </div>
+                <div class="contact-field">
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" rows="6"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary contact-submit" disabled
+                        aria-describedby="contact-preview-note">Send message — coming soon</button>
+            </form>
+        </section>
+    </div>
 </section>
-
 {% endblock %}
