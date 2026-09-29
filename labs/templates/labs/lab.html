@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steel & Code Python Lab</title>
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
+</head>
+<body>
+    <h1>Steel & Code Python Lab</h1>
+    <p>Browser-based Python practice environment.</p>
+
+    <textarea id="code" rows="20" cols="80">print("Hello, Steel & Code!")</textarea>
+
+    <br><br>
+
+    <button id="runButton" onclick="runPython()">Run</button>
+    <button onclick="openPythonFile()">Open .py</button>
+    <button onclick="savePythonFile()">Save .py</button>
+    <button onclick="resetCode()">Reset</button>
+    <button onclick="clearOutput()">Clear Output</button>
+
+<input
+    type="file"
+    id="fileInput"
+    accept=".py,text/x-python"
+    style="display: none;"
+>
+
+    <h2>Output</h2>
+    <pre id="output">Python is loading...</pre>
+
+    <script>
+        let pyodide;
+
+        async function initializePython() {
+            pyodide = await loadPyodide();
+
+            pyodide.setStdout({
+                batched: (text) => {
+                    document.getElementById("output").textContent += text + "\n";
+                }
+            });
+
+            pyodide.setStderr({
+                batched: (text) => {
+                    document.getElementById("output").textContent += text + "\n";
+                }
+            });
+            pyodide.setStdin({
+                stdin: () => {
+                   return prompt("Python input:");
+                }
+            });
+
+            document.getElementById("output").textContent = "Python ready.";
+        }
+
+        async function runPython() {
+            const code = document.getElementById("code").value;
+            const output = document.getElementById("output");
+
+            output.textContent = "";
+
+            try {
+                await pyodide.runPythonAsync(code);
+            } catch (error) {
+                output.textContent += error;
+            }
+        }
+
+        initializePython();
+        function savePythonFile() {
+    const code = document.getElementById("code").value;
+
+    let filename = prompt("Enter a filename:", "steel_code_lab.py");
+
+    if (!filename) {
+        return;
+    }
+
+    if (!filename.endsWith(".py")) {
+        filename += ".py";
+    }
+
+    const blob = new Blob([code], {
+        type: "text/x-python"
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+}
+function openPythonFile() {
+    document.getElementById("fileInput").click();
+}
+
+document.getElementById("fileInput").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+    codeEditor.value = e.target.result;
+    autosaveCode();
+};
+    reader.readAsText(file);
+
+    // Allows opening the same file again later if needed
+    event.target.value = "";
+});
+
+
+        const codeEditor = document.getElementById("code");
+const STORAGE_KEY = "steel_code_lab_autosave";
+
+function loadAutosavedCode() {
+    const savedCode = localStorage.getItem(STORAGE_KEY);
+
+    if (savedCode) {
+        codeEditor.value = savedCode;
+    }
+}
+
+function autosaveCode() {
+    localStorage.setItem(STORAGE_KEY, codeEditor.value);
+}
+
+codeEditor.addEventListener("input", autosaveCode);
+
+loadAutosavedCode();
+
+        const STARTER_CODE = 'print("Hello, Steel & Code!")';
+
+function resetCode() {
+    const confirmed = confirm(
+        "Reset the editor? Your current browser-saved code will be replaced."
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    codeEditor.value = STARTER_CODE;
+
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.setItem(STORAGE_KEY, STARTER_CODE);
+
+    document.getElementById("output").textContent = "";
+}
+        function clearOutput() {
+    document.getElementById("output").textContent = "";
+}
+    </script>
+</body>
+</html>
