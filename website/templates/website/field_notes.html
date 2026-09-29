@@ -1,0 +1,37 @@
+{% extends "website/base.html" %}
+
+{% block title %}Field Notes{% if page_obj.number > 1 %} | Page {{ page_obj.number }}{% endif %} | Steel &amp; Code{% endblock %}
+{% block meta %}
+    <meta name="description" content="Practical notes on Python, automation, and computational modeling from Steel &amp; Code.">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:title" content="Field Notes | Steel &amp; Code">
+    <meta property="og:description" content="Practical notes on Python, automation, and computational modeling from Steel &amp; Code.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ canonical_url }}">
+{% endblock %}
+
+{% block content %}
+<section class="page-section field-notes-page" aria-labelledby="field-notes-title">
+    <p class="eyebrow">FROM THE WORKBENCH</p>
+    <h1 id="field-notes-title">Field Notes</h1>
+    <p>Practical lessons, experiments, and observations on Python, automation, and computational modeling.</p>
+    <div class="field-note-list">
+        {% for note in page_obj %}
+        <article class="field-note-card">
+            <p class="field-note-meta">{{ note.category }} &middot; <time datetime="{{ note.published_date|date:'Y-m-d' }}">{{ note.published_date|date:"F j, Y" }}</time></p>
+            <h2><a href="{{ note.get_absolute_url }}">{{ note.title }}</a></h2>
+            <p>{{ note.summary }}</p>
+        </article>
+        {% empty %}
+        <p>No field notes published yet. Check back for notes from the workbench.</p>
+        {% endfor %}
+    </div>
+    {% if page_obj.has_other_pages %}
+    <nav class="field-note-pagination" aria-label="Field Notes pages">
+        {% if page_obj.has_previous %}<a class="btn btn-secondary" href="?page={{ page_obj.previous_page_number }}" rel="prev">Previous</a>{% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}<a class="btn btn-secondary" href="?page={{ page_obj.next_page_number }}" rel="next">Next</a>{% endif %}
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}

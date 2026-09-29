@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{% block title %}Steel & Code{% endblock %}</title>
+    {% block meta %}{% endblock %}
 
     <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
 </head>
@@ -14,12 +15,15 @@
 <body>
 
     <nav class="navbar">
-        <div class="brand">STEEL & CODE</div>
+        <a class="brand" href="{% url 'home' %}">
+            <img src="{% static 'website/Branding/Steel-and-code-logo.png' %}" alt="Steel &amp; Code" width="2172" height="724">
+        </a>
 
         <div class="nav-links">
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'courses' %}">Courses</a>
             <a href="{% url 'applied_physics' %}">Applied Physics</a>
+            <a href="{% url 'field_notes' %}">Field Notes</a>
             <a href="{% url 'about' %}">About</a>
             <a href="{% url 'contact' %}">Contact</a>
         </div>
