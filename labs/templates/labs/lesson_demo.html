@@ -1,0 +1,14 @@
+{% extends "website/base.html" %}
+{% load lab_tags %}
+
+{% block title %}Python Lesson Demo | Steel &amp; Code{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <p class="eyebrow">PYTHON PRACTICE</p>
+    <h1>Repeat a small task</h1>
+    <p>A loop repeats an instruction for each value. Run this example, then change the number of repetitions.</p>
+    <pre class="model-code"><code>{{ example_code }}</code></pre>
+    {% try_in_lab example_code %}
+</section>
+{% endblock %}

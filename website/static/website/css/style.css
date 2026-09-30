@@ -2,6 +2,12 @@
     box-sizing: border-box;
 }
 
+/* PF1 lessons retain the shared panels, code blocks, and mobile spacing. */
+.pf1-lesson { overflow-wrap: anywhere; }
+.pf1-lesson h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.1; }
+.pf1-lesson h2 { font-size: clamp(26px, 3vw, 34px); line-height: 1.2; }
+.pf1-lesson > section { max-width: 850px; }
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;

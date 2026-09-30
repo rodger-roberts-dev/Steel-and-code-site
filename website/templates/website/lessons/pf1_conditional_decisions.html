@@ -1,0 +1,58 @@
+{% extends "website/base.html" %}
+{% load lab_tags %}
+
+{% block title %}Making Decisions with if, elif, and else | Steel &amp; Code{% endblock %}
+{% block meta %}
+<meta name="description" content="Learn how Python uses if, elif, and else to choose between paths. Practice conditional decisions in the Steel &amp; Code Python Lab.">
+{% endblock %}
+
+{% block content %}
+<article class="page-section pf1-lesson" aria-labelledby="lesson-title">
+    <header>
+        <p class="eyebrow">PROGRAMMING FUNDAMENTALS I &middot; MODULE 2: CONDITIONAL DECISIONS</p>
+        <h1 id="lesson-title">Making Decisions with if, elif, and else</h1>
+        <p><strong>Objective:</strong> Use conditional statements to make a Python program respond differently based on data.</p>
+    </header>
+
+    <section class="model-section" aria-labelledby="explanation-title">
+        <h2 id="explanation-title">How Python chooses a path</h2>
+        <p>A condition is a test that is either true or false. In an <code>if</code>/<code>elif</code>/<code>else</code> chain, Python checks conditions from top to bottom and executes the first matching branch. It then skips the remaining branches in that chain.</p>
+        <p><code>if</code> starts the first test. <code>elif</code> means “else if” and checks another condition when earlier tests were false. <code>else</code> has no condition: it runs when none of the earlier conditions matched.</p>
+        <p>End each branch header with a colon and indent its instructions by four spaces. The indentation tells Python which instructions belong to that branch.</p>
+    </section>
+
+    <section class="model-panel" aria-labelledby="example-title">
+        <h2 id="example-title">Example: choose an age group</h2>
+        <p>The <code>&lt;</code> operator means “less than.” For <code>age = 20</code>, both tests are false, so <code>else</code> prints <code>Adult</code>.</p>
+        <pre class="model-code"><code>{{ example_code }}</code></pre>
+        {% try_in_lab example_code %}
+    </section>
+
+    <section class="model-section" aria-labelledby="guided-title">
+        <h2 id="guided-title">Guided challenge: predict, then test</h2>
+        <ol class="model-steps">
+            <li>Open the example in the Lab and change the value of <code>age</code>.</li>
+            <li>Predict the output before clicking <strong>Run</strong>. Identify the first condition that will be true, or decide whether Python will reach <code>else</code>.</li>
+            <li>Test <code>10</code>, <code>16</code>, and <code>25</code>, one at a time. Compare each result with your prediction.</li>
+        </ol>
+        <p>Then try <code>13</code> and <code>18</code>. Values exactly at a boundary help you check what “less than” includes.</p>
+    </section>
+
+    <section class="model-panel" aria-labelledby="practice-title">
+        <h2 id="practice-title">Independent practice: describe the temperature</h2>
+        <p>The <code>&gt;=</code> operator means “greater than or equal to.” Predict which branch matches a temperature of <code>78</code>, then test your prediction.</p>
+        <pre class="model-code"><code>{{ practice_code }}</code></pre>
+        {% try_in_lab practice_code %}
+        <p>Modify the thresholds or add another <code>elif</code> condition, such as a “Very hot” category. Decide where the new condition belongs, then test values below, at, and above each threshold.</p>
+        <p>Opening this example replaces the Lab's current autosave. Use <strong>Save .py</strong> first if you want to keep your age-group experiment.</p>
+    </section>
+
+    <section class="model-section" aria-labelledby="reflection-title">
+        <h2 id="reflection-title">Reflection</h2>
+        <ol class="model-steps">
+            <li>Why does the order of <code>if</code> and <code>elif</code> conditions matter?</li>
+            <li>What happens if none of the conditions are true?</li>
+        </ol>
+    </section>
+</article>
+{% endblock %}

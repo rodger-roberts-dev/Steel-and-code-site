@@ -1,169 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steel & Code Python Lab</title>
-
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
-</head>
-<body>
-    <h1>Steel & Code Python Lab</h1>
-    <p>Browser-based Python practice environment.</p>
-
-    <textarea id="code" rows="20" cols="80">print("Hello, Steel & Code!")</textarea>
-
-    <br><br>
-
-    <button id="runButton" onclick="runPython()">Run</button>
-    <button onclick="openPythonFile()">Open .py</button>
-    <button onclick="savePythonFile()">Save .py</button>
-    <button onclick="resetCode()">Reset</button>
-    <button onclick="clearOutput()">Clear Output</button>
-
-<input
-    type="file"
-    id="fileInput"
-    accept=".py,text/x-python"
-    style="display: none;"
->
-
-    <h2>Output</h2>
-    <pre id="output">Python is loading...</pre>
-
-    <script>
-        let pyodide;
-
-        async function initializePython() {
-            pyodide = await loadPyodide();
-
-            pyodide.setStdout({
-                batched: (text) => {
-                    document.getElementById("output").textContent += text + "\n";
-                }
-            });
-
-            pyodide.setStderr({
-                batched: (text) => {
-                    document.getElementById("output").textContent += text + "\n";
-                }
-            });
-            pyodide.setStdin({
-                stdin: () => {
-                   return prompt("Python input:");
-                }
-            });
-
-            document.getElementById("output").textContent = "Python ready.";
-        }
-
-        async function runPython() {
-            const code = document.getElementById("code").value;
-            const output = document.getElementById("output");
-
-            output.textContent = "";
-
-            try {
-                await pyodide.runPythonAsync(code);
-            } catch (error) {
-                output.textContent += error;
-            }
-        }
-
-        initializePython();
-        function savePythonFile() {
-    const code = document.getElementById("code").value;
-
-    let filename = prompt("Enter a filename:", "steel_code_lab.py");
-
-    if (!filename) {
-        return;
-    }
-
-    if (!filename.endsWith(".py")) {
-        filename += ".py";
-    }
-
-    const blob = new Blob([code], {
-        type: "text/x-python"
-    });
-
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    URL.revokeObjectURL(url);
-}
-function openPythonFile() {
-    document.getElementById("fileInput").click();
-}
-
-document.getElementById("fileInput").addEventListener("change", function(event) {
-    const file = event.target.files[0];
-
-    if (!file) {
-        return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-    codeEditor.value = e.target.result;
-    autosaveCode();
-};
-    reader.readAsText(file);
-
-    // Allows opening the same file again later if needed
-    event.target.value = "";
-});
-
-
-        const codeEditor = document.getElementById("code");
-const STORAGE_KEY = "steel_code_lab_autosave";
-
-function loadAutosavedCode() {
-    const savedCode = localStorage.getItem(STORAGE_KEY);
-
-    if (savedCode) {
-        codeEditor.value = savedCode;
-    }
-}
-
-function autosaveCode() {
-    localStorage.setItem(STORAGE_KEY, codeEditor.value);
-}
-
-codeEditor.addEventListener("input", autosaveCode);
-
-loadAutosavedCode();
-
-        const STARTER_CODE = 'print("Hello, Steel & Code!")';
-
-function resetCode() {
-    const confirmed = confirm(
-        "Reset the editor? Your current browser-saved code will be replaced."
-    );
-
-    if (!confirmed) {
-        return;
-    }
-
-    codeEditor.value = STARTER_CODE;
-
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.setItem(STORAGE_KEY, STARTER_CODE);
-
-    document.getElementById("output").textContent = "";
-}
-        function clearOutput() {
-    document.getElementById("output").textContent = "";
-}
-    </script>
-</body>
-</html>
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}Python Lab | Steel &amp; Code{% endblock %}
+{% block meta %}
+<link rel="stylesheet" href="{% static 'labs/vendor/codemirror/codemirror.css' %}">
+<link rel="stylesheet" href="{% static 'labs/lab.css' %}">
+{% endblock %}
+{% block content %}
+<section class="page-section lab-page" id="pythonLab" data-worker-url="{% static 'labs/python-worker.js' %}">
+    <p class="eyebrow">LEARN BY DOING</p>
+    <h1>Python Lab</h1>
+    <p>Practice Python in your browser. Open a script, try an idea, and check the result.</p>
+    <label for="code">Python code</label>
+    <textarea id="code" rows="18" spellcheck="false" autocapitalize="off">print("Hello, Steel &amp; Code!")</textarea>
+    <p id="editorStatus" class="lab-help" role="status">Tab indents; Shift+Tab unindents. Press Escape, then Tab to leave the editor.</p>
+    <p id="saveStatus" class="lab-help">Code is saved automatically in this browser.</p>
+    <label for="stdin">Program input (optional)</label>
+    <textarea id="stdin" rows="3" aria-describedby="inputHelp"></textarea>
+    <p id="inputHelp" class="lab-help">For input(), enter one response per line before running. Stop resets Python variables and keeps your code.</p>
+    <div class="lab-controls">
+        <button id="runButton" class="btn btn-primary" disabled>Run</button>
+        <button id="stopButton" class="btn btn-secondary" disabled>Stop</button>
+        <button id="retryButton" class="btn btn-secondary" hidden>Retry loading</button>
+        <button id="openButton" class="btn btn-secondary">Open .py</button>
+        <button id="saveButton" class="btn btn-secondary">Save .py</button>
+        <button id="resetButton" class="btn btn-secondary">Reset</button>
+        <button id="clearButton" class="btn btn-secondary">Clear Output</button>
+    </div>
+    <input type="file" id="fileInput" accept=".py,text/x-python" hidden>
+    <p id="runtimeStatus" class="lab-help" role="status">Python is loading...</p>
+    <noscript><p>Enable JavaScript to run Python in this lab.</p></noscript>
+    <h2 id="outputTitle">Output</h2>
+    <pre id="output" tabindex="0" aria-labelledby="outputTitle"></pre>
+</section>
+<script src="{% static 'labs/vendor/codemirror/codemirror.js' %}" defer></script>
+<script src="{% static 'labs/vendor/codemirror/python.js' %}" defer></script>
+<script src="{% static 'labs/lab.js' %}" defer></script>
+{% endblock %}

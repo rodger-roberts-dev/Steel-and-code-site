@@ -4,6 +4,8 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("courses/", views.courses, name="courses"),
+    path("courses/pf1/module-2/conditional-decisions/", views.pf1_conditional_decisions,
+         name="pf1_conditional_decisions"),
     path("applied-physics/", views.applied_physics, name="applied_physics"),
     path("about/", views.about, name="about"),
     path("contact/", views.contact, name="contact"),

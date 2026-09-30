@@ -1,0 +1,73 @@
+.lab-page { min-width: 0; }
+.lab-page h1 { font-size: clamp(34px, 5vw, 56px); }
+.lab-page label { display: block; margin: 24px 0 10px; font-weight: bold; }
+.lab-page > textarea,
+.lab-page > pre {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 16px;
+    border: 1px solid #777;
+    background: #181818;
+    color: #f3f3f3;
+    font: 16px/1.6 Consolas, monospace;
+    tab-size: 4;
+}
+.lab-page > textarea { display: block; resize: vertical; }
+.lab-page > pre { min-height: 120px; overflow: auto; }
+.lab-page .lab-help { font-size: 16px; }
+.lab-controls { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+.lab-controls button {
+    appearance: none;
+    background: #303030;
+    color: #f3f3f3;
+    border: 1px solid #777;
+    border-radius: 0;
+    font: inherit;
+    cursor: pointer;
+}
+.lab-controls button:hover:not(:disabled) {
+    background: #404040;
+    color: #fff;
+    border-color: #aaa;
+}
+.lab-controls button:disabled {
+    background: #303030;
+    color: #999;
+    border-color: #666;
+    cursor: not-allowed;
+}
+.lab-controls [hidden] { display: none; }
+.lab-page > textarea:focus-visible,
+.lab-page > pre:focus-visible,
+.lab-page button:focus-visible { outline: 2px solid #f2f2f2; outline-offset: 4px; }
+
+/* Keep editor internals separate from the Program Input/output styles. */
+.lab-page .CodeMirror {
+    width: 100%;
+    max-width: 100%;
+    height: 490px;
+    border: 1px solid #777;
+    font: 16px/1.6 Consolas, "Courier New", monospace;
+}
+.lab-page .CodeMirror-focused { outline: 2px solid #f2f2f2; outline-offset: 4px; }
+.cm-s-steel-code.CodeMirror { background: #181818; color: #f3f3f3; }
+.cm-s-steel-code .CodeMirror-gutters { background: #202020; border-right: 1px solid #444; }
+.cm-s-steel-code .CodeMirror-linenumber { color: #aaa; padding-right: 12px; }
+.cm-s-steel-code .CodeMirror-cursor { border-left-color: #f3f3f3; }
+.cm-s-steel-code .CodeMirror-selected { background: #3c4654; }
+.cm-s-steel-code .CodeMirror-line::selection,
+.cm-s-steel-code .CodeMirror-line > span::selection,
+.cm-s-steel-code .CodeMirror-line > span > span::selection { background: #3c4654; }
+.cm-s-steel-code .cm-keyword { color: #c7a7ef; }
+.cm-s-steel-code .cm-def { color: #9fcfff; }
+.cm-s-steel-code .cm-builtin { color: #87d9e6; }
+.cm-s-steel-code .cm-string { color: #c4dba5; }
+.cm-s-steel-code .cm-number,
+.cm-s-steel-code .cm-atom { color: #efbc8e; }
+.cm-s-steel-code .cm-comment { color: #aaa; font-style: italic; }
+.cm-s-steel-code .cm-meta { color: #e9c989; }
+.cm-s-steel-code .cm-error { color: #ffadad; text-decoration: underline; }
+@media (max-width: 760px) {
+    .lab-page .CodeMirror { height: 440px; }
+}

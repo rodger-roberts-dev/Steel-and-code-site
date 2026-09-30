@@ -11,6 +11,31 @@ def courses(request):
     return render(request, "website/courses.html")
 
 
+def pf1_conditional_decisions(request):
+    example_code = '''age = 20
+
+if age < 13:
+    print("Child")
+elif age < 18:
+    print("Teenager")
+else:
+    print("Adult")
+'''
+    practice_code = '''temperature = 78
+
+if temperature >= 90:
+    print("Hot")
+elif temperature >= 70:
+    print("Comfortable")
+else:
+    print("Cool")
+'''
+    return render(request, "website/lessons/pf1_conditional_decisions.html", {
+        "example_code": example_code,
+        "practice_code": practice_code,
+    })
+
+
 def applied_physics(request):
     return render(request, "website/applied_physics.html")
 

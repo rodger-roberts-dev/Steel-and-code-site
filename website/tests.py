@@ -1,13 +1,68 @@
 from datetime import timedelta
+from html.parser import HTMLParser
+from urllib.parse import parse_qs, urlsplit
 
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError, transaction
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils import timezone
 
 from .models import FieldNote
 from .templatetags.field_notes import render_markdown
+
+
+class LessonParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.links = []
+        self.code_blocks = []
+        self.in_pre = False
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'a':
+            href = dict(attrs).get('href', '')
+            if '?code=' in href:
+                self.links.append(href)
+        if tag == 'pre':
+            self.in_pre = True
+            self.code_blocks.append('')
+
+    def handle_endtag(self, tag):
+        if tag == 'pre':
+            self.in_pre = False
+
+    def handle_data(self, data):
+        if self.in_pre:
+            self.code_blocks[-1] += data
+
+
+class PF1LessonTests(SimpleTestCase):
+    def test_lesson_layout_and_content(self):
+        response = self.client.get(reverse('pf1_conditional_decisions'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(reverse('pf1_conditional_decisions'), '/courses/pf1/module-2/conditional-decisions/')
+        self.assertTemplateUsed(response, 'website/base.html')
+        self.assertTemplateUsed(response, 'labs/try_in_lab.html')
+        for text in ('Making Decisions with if, elif, and else',
+                     'Use conditional statements to make a Python program respond differently based on data.',
+                     'Guided challenge', 'Independent practice', 'Reflection'):
+            self.assertContains(response, text)
+        self.assertContains(response, '>Try in Lab</a>', count=2)
+
+    def test_displayed_examples_and_links_match_view_source_exactly(self):
+        response = self.client.get(reverse('pf1_conditional_decisions'))
+        parser = LessonParser()
+        parser.feed(response.content.decode())
+        sources = [response.context['example_code'], response.context['practice_code']]
+        self.assertEqual(parser.code_blocks, sources)
+        self.assertEqual(len(parser.links), 2)
+        self.assertTrue(sources[0].startswith('age = 20\n'))
+        self.assertTrue(sources[1].startswith('temperature = 78\n'))
+        for href, source in zip(parser.links, sources):
+            self.assertEqual(urlsplit(href).path, reverse('python_lab'))
+            self.assertEqual(parse_qs(urlsplit(href).query)['code'], [source])
+            compile(source, '<lesson starter>', 'exec')
 
 
 class FieldNoteTests(TestCase):
