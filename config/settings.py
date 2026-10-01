@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,18 @@ SECRET_KEY = 'django-insecure-$12n78)m56pxix__-yyi3lp-$ss7y7ki-n7ci@88x8=vs$!!x_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Hosts this site may be served under, read from the ALLOWED_HOSTS env var as a
+# comma-separated list. Falls back to local-development hosts so a fresh clone
+# works without extra setup. Set ALLOWED_HOSTS explicitly in any deployed
+# environment (e.g. "steelandcode.com,www.steelandcode.com").
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get(
+        "ALLOWED_HOSTS",
+        "localhost,127.0.0.1,192.168.5.148",
+    ).split(",")
+    if host.strip()
+]
 
 
 # Application definition
