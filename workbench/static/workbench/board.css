@@ -1,0 +1,116 @@
+/* Lesson Board: a dark slate chalkboard with light writing and Steel & Code
+ * blue accents. Shares the --wb-blue and grayscale tokens from workbench.css.
+ */
+
+.board-page {
+    --wb-blue: #4d8fd6;
+    --wb-chalk: #e8eef2;
+    --wb-slate: #1c2733;
+    --wb-slate-deep: #16202a;
+    --wb-frame: #3a3a3a;
+
+    padding: 48px 6% 72px;
+    max-width: 1400px;
+    min-width: 0;
+}
+
+.board-header { margin-bottom: 26px; }
+.board-header h1 {
+    margin: 10px 0 10px;
+    font-size: clamp(32px, 4.5vw, 48px);
+    line-height: 1.1;
+}
+.board-header .eyebrow { margin: 0 0 8px; }
+.board-tagline { margin: 0; max-width: 60ch; color: #aaa; font-size: 17px; line-height: 1.6; }
+
+/* Toolbar */
+.board-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 18px;
+    background: #181818;
+    border: 1px solid var(--wb-frame);
+}
+.board-tool-group { display: flex; align-items: center; gap: 10px; }
+/* Push the save/navigation actions to the trailing edge on wide screens. */
+.board-actions { margin-left: auto; }
+
+.board-toolbar .btn {
+    padding: 10px 18px;
+    background: #303030;
+    color: #f3f3f3;
+    border: 1px solid #777;
+    cursor: pointer;
+}
+/* The active tool is filled with the Steel & Code blue. */
+.board-tool[aria-pressed="true"] {
+    background: var(--wb-blue);
+    border-color: var(--wb-blue);
+    color: #0d1117;
+    font-weight: bold;
+}
+.board-toolbar .btn:hover { background: #404040; color: #fff; }
+.board-toolbar .btn:focus-visible,
+.board-width-group input:focus-visible {
+    outline: 2px solid var(--wb-blue);
+    outline-offset: 3px;
+}
+
+.board-width-group label {
+    color: #aaa;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.board-width-group input[type="range"] { width: 130px; accent-color: var(--wb-blue); }
+.board-width-group output {
+    min-width: 2.5ch;
+    color: #f3f3f3;
+    font: 15px Consolas, monospace;
+}
+
+#boardStatus { margin: 14px 0 12px; color: #aaa; font-size: 15px; }
+
+/* Chalkboard surface */
+.board-surface {
+    background: var(--wb-slate-deep);
+    border: 2px solid var(--wb-frame);
+    /* Fullscreen promotes only the surface, so the canvas fills the screen. */
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.45);
+}
+.board-surface:fullscreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: var(--wb-slate-deep);
+    border: 0;
+}
+.board-surface:fullscreen .board-canvas { width: 100%; height: 100%; }
+
+.board-canvas {
+    display: block;
+    width: 100%;
+    /* Keeps a usable drawing area on desktop without a fixed pixel height. */
+    height: 62vh;
+    min-height: 380px;
+    background: var(--wb-slate);
+    cursor: crosshair;
+    /* The canvas owns its own pointer events; avoid page scroll hijacking. */
+    touch-action: none;
+}
+.board-canvas:focus-visible { outline: 3px solid var(--wb-blue); outline-offset: -3px; }
+/* Eraser reads as a blocky tool rather than a drawing nib. */
+.board-page[data-tool="eraser"] .board-canvas { cursor: cell; }
+
+/* Fullscreen: the board fills the viewport and the toolbar stays reachable. */
+.board-page:has(.board-surface:fullscreen) { padding: 0; max-width: none; }
+
+@media (max-width: 760px) {
+    .board-page { padding: 32px 4% 56px; }
+    .board-toolbar { gap: 14px; }
+    .board-actions { margin-left: 0; width: 100%; }
+    .board-canvas { height: 56vh; min-height: 300px; }
+}

@@ -1,0 +1,247 @@
+/* Workbench layout and panels.
+ *
+ * Reuses the site design language from website/css/style.css: near-black
+ * surfaces (#101010 page, #181818 panels), light text (#f3f3f3), squared
+ * corners, thin grey borders, and bold .btn treatment.
+ *
+ * --wb-blue is the one new value. The existing site and logo are entirely
+ * grayscale, so a Steel & Code blue accent is introduced here as a CSS
+ * custom property. Change it in one place to retheme the Workbench.
+ */
+
+.workbench-page {
+    --wb-blue: #4d8fd6;
+    --wb-blue-soft: rgba(77, 143, 214, 0.16);
+    --wb-blue-line: rgba(77, 143, 214, 0.55);
+    --wb-ink: #f3f3f3;
+    --wb-muted: #aaa;
+    --wb-panel: #181818;
+    --wb-border: #3a3a3a;
+    --wb-border-strong: #777;
+    --wb-error: #ffadad;
+    /* Gutter between the viewport top and the sticky code column on desktop.
+       Also used to bound the column's max-height. */
+    --wb-sticky-offset: 24px;
+
+    padding: 56px 6% 96px;
+    max-width: 1500px;
+    min-width: 0;
+}
+
+.workbench-header { margin-bottom: 32px; }
+.workbench-header h1 {
+    margin: 10px 0 12px;
+    font-size: clamp(34px, 5vw, 56px);
+    line-height: 1.1;
+}
+.workbench-header .eyebrow { margin: 0 0 8px; }
+.workbench-tagline {
+    margin: 0;
+    max-width: 60ch;
+    color: var(--wb-muted);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.workbench-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 24px;
+    /* align-items: start is required for a sticky grid child to stick rather
+       than stretch to the tallest row. */
+    align-items: start;
+}
+.workbench-column { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+
+/* Desktop only: pin the code column so the editor, controls, and output stay
+ * visible while the lesson panel scrolls.
+ *
+ * The site navbar (.navbar in website/css/style.css) is position: static, not
+ * fixed, so it scrolls out of view rather than overlaying the page. The sticky
+ * offset is therefore a small gutter below the viewport top, which also keeps
+ * the panel clear of the header while the header is still on screen.
+ *
+ * max-height plus overflow-y lets the editor and output scroll internally
+ * instead of growing past the viewport.
+ */
+@media (min-width: 1001px) {
+    .workbench-column-code {
+        position: sticky;
+        top: var(--wb-sticky-offset, 24px);
+        max-height: calc(100vh - var(--wb-sticky-offset, 24px) * 2);
+        overflow-y: auto;
+        /* Reserve the scrollbar gutter so panels do not shift sideways. */
+        scrollbar-gutter: stable;
+        padding-right: 4px;
+    }
+}
+
+/* Panels */
+.wb-panel {
+    min-width: 0;
+    padding: 26px;
+    background: var(--wb-panel);
+    border: 1px solid var(--wb-border);
+}
+/* Lesson panel carries the blue accent; editor and output stay neutral. */
+.wb-lesson-panel { border-top: 3px solid var(--wb-blue); }
+
+.wb-panel-head { margin: 0 0 20px; }
+.wb-panel-head .eyebrow { margin: 0 0 6px; }
+.wb-lesson-title { margin: 0; font-size: 28px; line-height: 1.25; }
+.wb-source { margin: 8px 0 0; color: var(--wb-muted); font-size: 14px; }
+
+/* Blocks inside the lesson panel */
+.wb-block { margin-top: 24px; }
+.wb-block:first-of-type { margin-top: 0; }
+.wb-block-title {
+    margin: 0 0 10px;
+    padding-bottom: 6px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--wb-muted);
+    border-bottom: 1px solid var(--wb-border);
+}
+.wb-block p { margin: 0 0 12px; line-height: 1.65; color: #ddd; overflow-wrap: anywhere; }
+.wb-block p:last-child { margin-bottom: 0; }
+
+/* Objective is called out so it reads as the lesson's promise. */
+.wb-objective {
+    padding: 16px 18px;
+    background: var(--wb-blue-soft);
+    border-left: 3px solid var(--wb-blue);
+}
+.wb-objective .wb-block-title { color: var(--wb-blue); border-bottom-color: var(--wb-blue-line); }
+.wb-objective-text { margin: 0; font-size: 18px; color: var(--wb-ink) !important; }
+
+.wb-code-sample {
+    margin: 14px 0 0;
+    padding: 14px 16px;
+    background: #101010;
+    border: 1px solid var(--wb-border-strong);
+    color: var(--wb-ink);
+    font: 15px/1.6 Consolas, "Courier New", monospace;
+    overflow: auto;
+    white-space: pre;
+}
+
+/* Editor */
+.wb-editor-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; }
+.wb-editor-head .wb-block-title { margin: 0; padding: 0; border: 0; }
+.wb-runtime-note { margin: 0; color: var(--wb-muted); font-size: 14px; }
+
+.wb-editor-panel > textarea {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+    background: #101010;
+    color: var(--wb-ink);
+    border: 1px solid var(--wb-border-strong);
+    font: 16px/1.6 Consolas, "Courier New", monospace;
+    tab-size: 4;
+    resize: vertical;
+}
+
+.wb-help { margin: 10px 0 0; color: var(--wb-muted); font-size: 15px; line-height: 1.5; }
+.wb-visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.wb-controls { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 0; }
+.wb-controls .btn { padding: 12px 20px; }
+
+/* The Workbench has no server side, so Run never posts anywhere. */
+.wb-controls .btn-secondary { background: #303030; color: var(--wb-ink); border-color: var(--wb-border-strong); }
+.wb-controls .btn-secondary:hover { background: #404040; color: #fff; border-color: #aaa; }
+.wb-controls .btn-primary:disabled { background: #303030; color: #999; border-color: #666; cursor: not-allowed; }
+
+.wb-editor-panel > textarea:focus-visible,
+.wb-output:focus-visible,
+.wb-error:focus-visible,
+.wb-code-sample:focus-visible,
+.wb-controls .btn:focus-visible { outline: 2px solid var(--wb-blue); outline-offset: 3px; }
+
+/* Output panel: a distinct surface, clearly separated from the editor. */
+.wb-output-panel {
+    background: #101010;
+    border: 1px solid var(--wb-border-strong);
+    border-top: 3px solid var(--wb-blue);
+}
+.wb-output-empty { margin: 0; color: var(--wb-muted); font-size: 16px; }
+.wb-output, .wb-error {
+    margin: 0;
+    padding: 16px;
+    min-height: 120px;
+    max-height: 420px;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font: 15px/1.6 Consolas, "Courier New", monospace;
+    background: #181818;
+    color: var(--wb-ink);
+}
+.wb-error {
+    margin-top: 14px;
+    border-left: 3px solid var(--wb-error);
+    background: #241a1a;
+    color: var(--wb-error);
+}
+.wb-output[hidden], .wb-error[hidden], .wb-output-empty[hidden] { display: none; }
+
+.workbench-noscript {
+    margin: 24px 6%;
+    padding: 16px;
+    border: 1px solid #777;
+    background: #181818;
+}
+
+/* CodeMirror, themed to the site while flagging the editor's blue focus. */
+.workbench-page .CodeMirror {
+    width: 100%;
+    max-width: 100%;
+    height: 460px;
+    border: 1px solid var(--wb-border-strong);
+    font: 16px/1.6 Consolas, "Courier New", monospace;
+}
+.workbench-page .CodeMirror-focused { outline: 2px solid var(--wb-blue); outline-offset: 3px; }
+.cm-s-steel-code.CodeMirror { background: #101010; color: var(--wb-ink); }
+.cm-s-steel-code .CodeMirror-gutters { background: #202020; border-right: 1px solid #444; }
+.cm-s-steel-code .CodeMirror-linenumber { color: var(--wb-muted); padding-right: 12px; }
+.cm-s-steel-code .CodeMirror-cursor { border-left-color: var(--wb-ink); }
+.cm-s-steel-code .CodeMirror-selected { background: var(--wb-blue-soft); }
+.cm-s-steel-code .CodeMirror-line::selection,
+.cm-s-steel-code .CodeMirror-line > span::selection,
+.cm-s-steel-code .CodeMirror-line > span > span::selection { background: var(--wb-blue-soft); }
+.cm-s-steel-code .cm-keyword { color: #c7a7ef; }
+.cm-s-steel-code .cm-def { color: #9fcfff; }
+.cm-s-steel-code .cm-builtin { color: #87d9e6; }
+.cm-s-steel-code .cm-string { color: #c4dba5; }
+.cm-s-steel-code .cm-number,
+.cm-s-steel-code .cm-atom { color: #efbc8e; }
+.cm-s-steel-code .cm-comment { color: var(--wb-muted); font-style: italic; }
+.cm-s-steel-code .cm-meta { color: #e9c989; }
+.cm-s-steel-code .cm-error { color: var(--wb-error); text-decoration: underline; }
+
+/* Tablet and mobile: the panels stack, so the code column must not stick or
+   scroll internally. Sticky is already scoped to min-width: 1001px above;
+   this resets the internal scrolling explicitly so a narrower viewport is
+   never left with a clipped column. */
+@media (max-width: 1000px) {
+    .workbench-grid { grid-template-columns: minmax(0, 1fr); }
+    .workbench-page { padding: 40px 5% 72px; }
+    .workbench-page .CodeMirror { height: 400px; }
+    .workbench-column-code {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+        padding-right: 0;
+    }
+}

@@ -1,0 +1,46 @@
+{% comment %}
+Reusable Python Code Editor + Output Panel.
+
+The starter code is delivered as a data attribute and applied by workbench.js.
+It is deliberately NOT rendered as textarea content: Django would escape it,
+and the raw value must round-trip exactly to Python. The textarea is a
+progressive-enhancement fallback if CodeMirror fails to load.
+{% endcomment %}
+<section class="wb-panel wb-editor-panel" aria-labelledby="wbEditorTitle"
+         data-starter-code="{{ lesson.starter_code }}">
+
+    <header class="wb-panel-head wb-editor-head">
+        <h2 id="wbEditorTitle" class="wb-block-title">Python Editor</h2>
+        <p class="wb-runtime-note">{{ lesson.runtime|default:"Python runs in your browser." }}</p>
+    </header>
+
+    <label class="wb-visually-hidden" for="wbCode">Python code</label>
+    <textarea id="wbCode" rows="16" spellcheck="false" autocapitalize="off"
+              autocomplete="off" autocorrect="off"
+              aria-describedby="wbEditorStatus"></textarea>
+    <p id="wbEditorStatus" class="wb-help" role="status">Tab indents; Shift+Tab unindents.</p>
+
+    <div class="wb-controls">
+        <button type="button" id="wbRun" class="btn btn-primary" disabled>Run</button>
+        <button type="button" id="wbReset" class="btn btn-secondary">Reset</button>
+        <button type="button" id="wbClearOutput" class="btn btn-secondary">Clear Output</button>
+        <button type="button" id="wbSave" class="btn btn-secondary">Save Locally</button>
+        <a href="{% url 'workbench:board' %}" id="wbOpenBoard" class="btn btn-secondary">Open Lesson Board</a>
+    </div>
+
+    <p id="wbRuntimeStatus" class="wb-help" role="status">Python is loading...</p>
+    <p id="wbSaveStatus" class="wb-help" role="status">Starter code is preloaded.</p>
+
+</section>
+
+{% comment %} Output Panel: visually separate from the editor above. {% endcomment %}
+<section class="wb-panel wb-output-panel" aria-labelledby="wbOutputTitle">
+    <header class="wb-panel-head">
+        <h2 id="wbOutputTitle" class="wb-block-title">Output</h2>
+    </header>
+
+    <p id="wbOutputEmpty" class="wb-output-empty">Nothing yet. Press Run to execute the code.</p>
+
+    <pre id="wbOutput" class="wb-output" tabindex="0" aria-labelledby="wbOutputTitle" hidden></pre>
+    <pre id="wbError" class="wb-error" tabindex="0" aria-labelledby="wbOutputTitle" hidden></pre>
+</section>

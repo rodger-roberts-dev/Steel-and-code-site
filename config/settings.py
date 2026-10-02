@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'website',
 
     "labs",
+    "workbench",
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,67 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Lesson Board | Steel &amp; Code Workbench{% endblock %}
+
+{% block meta %}
+<link rel="stylesheet" href="{% static 'workbench/workbench.css' %}">
+<link rel="stylesheet" href="{% static 'workbench/board.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="board-page" id="boardPage">
+
+    <header class="board-header">
+        <p class="eyebrow">LESSON BOARD</p>
+        <h1>Lesson Board</h1>
+        <p class="board-tagline">Sketch a diagram, work through an idea, or work out a problem by hand.</p>
+    </header>
+
+    {% comment %}
+    Toolbar buttons are given stable ids and data-tool values so board.js binds
+    by behaviour rather than by position. The canvas is sized by board.js on
+    load and again on resize.
+    {% endcomment %}
+    <div class="board-toolbar" role="toolbar" aria-label="Board tools">
+
+        <div class="board-tool-group" role="radiogroup" aria-label="Drawing tool">
+            <button type="button" id="boardPen" class="btn board-tool" data-tool="pen"
+                    aria-pressed="true">Pen</button>
+            <button type="button" id="boardEraser" class="btn board-tool" data-tool="eraser"
+                    aria-pressed="false">Eraser</button>
+        </div>
+
+        <div class="board-tool-group">
+            {% comment %} Disabled until JavaScript enables it: a fresh board has nothing to undo. {% endcomment %}
+            <button type="button" id="boardUndo" class="btn btn-secondary" disabled>Undo</button>
+            <button type="button" id="boardClear" class="btn btn-secondary">Clear Board</button>
+        </div>
+
+        <div class="board-tool-group board-width-group">
+            <label for="boardWidth">Pen width</label>
+            <input type="range" id="boardWidth" min="1" max="40" step="1" value="4"
+                   aria-describedby="boardWidthValue">
+            <output id="boardWidthValue" for="boardWidth">4</output>
+        </div>
+
+        <div class="board-tool-group board-actions">
+            <button type="button" id="boardSavePng" class="btn btn-secondary">Save as PNG</button>
+            <button type="button" id="boardFullscreen" class="btn btn-secondary">Fullscreen</button>
+            <a href="{% url 'workbench:index' %}" class="btn btn-secondary">Back to Workbench</a>
+        </div>
+
+    </div>
+
+    <p id="boardStatus" class="wb-help" role="status">Draw with a mouse, trackpad, or stylus.</p>
+
+    {% comment %} Dark slate chalkboard surface; strokes are light. {% endcomment %}
+    <div class="board-surface" id="boardSurface">
+        <canvas id="boardCanvas" class="board-canvas" tabindex="0"
+                aria-label="Lesson drawing board. Use the toolbar to choose a tool."></canvas>
+    </div>
+
+    <noscript><p class="workbench-noscript">Enable JavaScript to use the Lesson Board.</p></noscript>
+</div>
+
+<script src="{% static 'workbench/board.js' %}" defer></script>
+{% endblock %}

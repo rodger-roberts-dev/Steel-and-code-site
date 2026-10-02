@@ -1,0 +1,43 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}{{ lesson.title }} | Steel &amp; Code Workbench{% endblock %}
+
+{% block meta %}
+<link rel="stylesheet" href="{% static 'labs/vendor/codemirror/codemirror.css' %}">
+<link rel="stylesheet" href="{% static 'workbench/workbench.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="workbench-page"
+     data-worker-url="{% static 'workbench/pyodide-worker.js' %}"
+     data-pyodide-cdn="{{ pyodide_cdn }}"
+     data-lesson-slug="{{ lesson.slug }}">
+
+    <header class="workbench-header">
+        <p class="eyebrow">STEEL &amp; CODE WORKBENCH</p>
+        <h1>Workbench</h1>
+        <p class="workbench-tagline">Lesson on the left. Code on the right. Everything runs in your browser.</p>
+    </header>
+
+    <div class="workbench-grid">
+
+        {% comment %} Area 1: Lesson Panel {% endcomment %}
+        <div class="workbench-column workbench-column-lesson">
+            {% include "workbench/_lesson_panel.html" %}
+        </div>
+
+        {% comment %} Areas 2 and 3: Code Editor, then Output Panel {% endcomment %}
+        <div class="workbench-column workbench-column-code">
+            {% include "workbench/_editor_panel.html" %}
+        </div>
+
+    </div>
+</div>
+
+<noscript><p class="workbench-noscript">Enable JavaScript to run Python in the Workbench.</p></noscript>
+
+<script src="{% static 'labs/vendor/codemirror/codemirror.js' %}" defer></script>
+<script src="{% static 'labs/vendor/codemirror/python.js' %}" defer></script>
+<script src="{% static 'workbench/workbench.js' %}" defer></script>
+{% endblock %}

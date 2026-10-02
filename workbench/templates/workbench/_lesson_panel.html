@@ -1,0 +1,60 @@
+{% comment %}
+Reusable Lesson Panel.
+
+Renders whatever content the `lesson` context object carries. This template
+never names a specific lesson, so a new PF1 lesson needs no markup change.
+
+Optional sub-dicts (example / practice) may carry their own `label` and
+`code`; `body` is treated as blank-line-separated paragraphs.
+{% endcomment %}
+<section class="wb-panel wb-lesson-panel" aria-labelledby="wbLessonTitle">
+
+    <header class="wb-panel-head">
+        <p class="eyebrow">{{ lesson.eyebrow|default:"LESSON" }}</p>
+        <h2 id="wbLessonTitle" class="wb-lesson-title">{{ lesson.title }}</h2>
+        {% if lesson.source %}<p class="wb-source">{{ lesson.source }}</p>{% endif %}
+    </header>
+
+    {% comment %} Learning objective {% endcomment %}
+    <div class="wb-block wb-objective">
+        <h3 class="wb-block-title">Objective</h3>
+        <p class="wb-objective-text">{{ lesson.objective }}</p>
+    </div>
+
+    {% comment %} Explanation {% endcomment %}
+    <div class="wb-block wb-explanation">
+        <h3 class="wb-block-title">Explanation</h3>
+        {% for paragraph in lesson.explanation.splitlines %}
+            {% if paragraph.strip %}<p>{{ paragraph }}</p>{% endif %}
+        {% endfor %}
+    </div>
+
+    {% comment %} Example {% endcomment %}
+    {% if lesson.example %}
+    <div class="wb-block wb-example">
+        <h3 class="wb-block-title">{{ lesson.example.label|default:"Example" }}</h3>
+        {% if lesson.example.body %}
+            {% for paragraph in lesson.example.body.splitlines %}
+                {% if paragraph.strip %}<p>{{ paragraph }}</p>{% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if lesson.example.code %}<pre class="wb-code-sample" tabindex="0"><code>{{ lesson.example.code }}</code></pre>{% endif %}
+    </div>
+    {% endif %}
+
+    {% comment %} Practice prompt {% endcomment %}
+    {% if lesson.practice %}
+    <div class="wb-block wb-practice">
+        <h3 class="wb-block-title">{{ lesson.practice.label|default:"Practice" }}</h3>
+        {% if lesson.practice.body %}
+            {% for paragraph in lesson.practice.body.splitlines %}
+                {% if paragraph.strip %}<p>{{ paragraph }}</p>{% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if lesson.practice.code %}
+        <pre class="wb-code-sample" tabindex="0"><code>{{ lesson.practice.code }}</code></pre>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</section>

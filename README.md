@@ -160,10 +160,45 @@ server logs and have practical length limits. Before expanding to larger lessons
 prefer stable lesson IDs with server-provided starters and per-lesson autosaves;
 the current single autosave can be replaced by opening another lesson.
 
+## Workbench
+
+`/workbench/` is the reusable lesson Workbench. Three areas:
+
+- **Lesson Panel** — objective, explanation, example, practice prompt.
+- **Python Code Editor** — editable code with preloaded starter, plus Run,
+  Reset, Clear Output, Save Locally, and Open Lesson Board.
+- **Output Panel** — program output and Python errors, kept visually separate.
+
+Python runs in the browser through Pyodide, pinned to the same version as the
+Lab (`PYODIDE_VERSION` in `workbench/views.py`) and loaded from a CDN inside a
+Web Worker. There is no server-side code execution, and a test asserts that no
+run endpoint exists. Student work is kept in `localStorage` under a per-lesson
+key; nothing is uploaded.
+
+### Adding a lesson
+
+Lesson content lives in `workbench/lessons.py` as a dict. The Workbench
+templates and JavaScript never name a lesson, so a new lesson needs no
+template, CSS, or JS changes — add a `LESSONS` entry and it is served at
+`/workbench/<slug>/`. An unknown slug falls back to the placeholder lesson.
+
+Each entry needs `slug`, `title`, `objective`, `explanation`, `example`,
+`practice`, and `starter_code`; `eyebrow`, `source`, and `runtime` are optional.
+`get_lesson()` returns a deep copy, so a view cannot mutate the registry.
+
+### Lesson Board
+
+`/workbench/board/` is a chalkboard for working ideas out by hand: freehand
+drawing (Pointer Events, so mouse and stylus share one path), eraser, undo,
+clear, adjustable pen width, save as PNG, and fullscreen. Undo snapshots are
+capped at 20 steps to bound memory. The board is dark slate with light writing
+and a Steel & Code blue accent.
+
 ## Checks
 
 ```powershell
 python manage.py check
 python manage.py makemigrations --check --dry-run
 python manage.py test
+node --test workbench/workbench.test.cjs
 ```
